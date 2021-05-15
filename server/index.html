@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <title>Chatter</title>
+</head>
+
+<body>
+    <div id="container">
+        <div id="chatWrapper">
+            <h2>Chatter Bot V1</h2>
+            <form id="chatForm">
+                <input type="text" size="35" id="message" placeholder="Say Something...">
+                <button id="submitButton">Send</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div id="container">
+        <div id="test">
+
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.1.1/socket.io.min.js"
+        integrity="sha384-cdrFIqe3RasCMNE0jeFG9xJHog/tgOVC1E9Lzve8LQN1g5WUHo0Kvk1mawWjxX7a"
+        crossorigin="anonymous"></script>
+
+    <script>
+        var socket = io();
+
+        var form = document.getElementById('chatForm');
+        var message = document.getElementById('message');
+
+        form.addEventListener('submit', function (e) {
+            console.log("🚀 ~ file: index.html ~ line 29 ~ input", message.value)
+            e.preventDefault();
+            if (message.value) {
+                socket.emit('chat', message.value);
+                message.value = '';
+            }
+        });
+
+        socket.on("chat2", (message) => {
+            console.log("--->", message);
+            const test = document.getElementById('test');
+            test.innerHTML += message;
+        });
+    </script>
+
+</body>
+
+</html>
